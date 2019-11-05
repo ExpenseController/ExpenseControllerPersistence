@@ -17,5 +17,10 @@
             <artifactId>xstream</artifactId>
             <version>1.4.11.1</version>
         </dependency>
+        <dependency>
+            <groupId>br.com.lrm</groupId>
+            <artifactId>expenseControllerLibrary</artifactId>
+            <version>0.1</version>
+        </dependency>
     </dependencies>
 </project>
