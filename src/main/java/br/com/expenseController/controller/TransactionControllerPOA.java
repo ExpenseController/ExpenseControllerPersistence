@@ -1,11 +1,10 @@
 package br.com.expenseController.controller;
 
-import br.com.expenseController.model.Period;
-import br.com.expenseController.model.PeriodHelper;
 import br.com.expenseController.model.Transaction;
 import br.com.expenseController.model.TransactionHelper;
 import br.com.expenseController.model.TransactionsHelper;
 import java.util.Hashtable;
+import java.util.List;
 import org.omg.CORBA.BAD_OPERATION;
 import org.omg.CORBA.CompletionStatus;
 import org.omg.CORBA.ORB;
@@ -87,18 +86,8 @@ public abstract class TransactionControllerPOA extends Servant
 
         case 4: // br/com/expenseController/controllers/TransactionController/loadAll
         {
-            Transaction result[] = null;
+            List<Transaction> result = null;
             result = this.loadAll();
-            out = rh.createReply();
-            TransactionsHelper.write(out, result);
-            break;
-        }
-
-        case 5: // br/com/expenseController/controllers/TransactionController/loadPeriod
-        {
-            Period Period = PeriodHelper.read(in);
-            Transaction result[] = null;
-            result = this.loadPeriod(Period);
             out = rh.createReply();
             TransactionsHelper.write(out, result);
             break;
