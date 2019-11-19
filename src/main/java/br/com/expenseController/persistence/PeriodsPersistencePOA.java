@@ -40,37 +40,17 @@ public abstract class PeriodsPersistencePOA extends Servant
         }
 
         switch (__method.intValue()) {
-        case 0: // br/com/expenseController/persistence/PeriodPersistence/insert
+        case 0: // br/com/expenseController/persistence/PeriodPersistence/save
         {
-            Period period = PeriodHelper.read(in);
+            List<Period> periods = PeriodsHelper.read(in);
             boolean $result = false;
-            $result = this.insert(period);
+            $result = this.save(periods);
             out = rh.createReply();
             out.write_boolean($result);
             break;
         }
 
-        case 1: // br/com/expenseController/persistence/PeriodPersistence/update
-        {
-            Period period = PeriodHelper.read(in);
-            boolean $result = false;
-            $result = this.update(period);
-            out = rh.createReply();
-            out.write_boolean($result);
-            break;
-        }
-
-        case 2: // br/com/expenseController/persistence/PeriodPersistence/remove
-        {
-            Period period = PeriodHelper.read(in);
-            boolean $result = false;
-            $result = this.remove(period);
-            out = rh.createReply();
-            out.write_boolean($result);
-            break;
-        }
-
-        case 3: // br/com/expenseController/persistence/PeriodPersistence/load
+        case 1: // br/com/expenseController/persistence/PeriodPersistence/load
         {
             int code = in.read_long();
             Period $result = null;
@@ -80,7 +60,7 @@ public abstract class PeriodsPersistencePOA extends Servant
             break;
         }
 
-        case 4: // br/com/expenseController/persistence/PeriodPersistence/loadAll
+        case 2: // br/com/expenseController/persistence/PeriodPersistence/loadAll
         {
             List<Period> result = null;
             result = this.loadAll();
@@ -96,6 +76,7 @@ public abstract class PeriodsPersistencePOA extends Servant
         return out;
     }
 
+    @Override
     public String[] _all_interfaces(org.omg.PortableServer.POA poa, byte[] objectId) {
         return (String[]) IDS.clone();
     }

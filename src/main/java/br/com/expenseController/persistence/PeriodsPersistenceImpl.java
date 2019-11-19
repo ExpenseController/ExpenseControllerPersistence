@@ -26,75 +26,12 @@ public class PeriodsPersistenceImpl extends PeriodsPersistencePOA {
 
     private static final String FILE_DIR = "database/Periods.json";
     private static final Logger LOG = LoggerFactory.getLogger(PeriodsPersistenceImpl.class);
-    private static PeriodsPersistenceImpl INSTANCE;
-    private final List<Period> periods;
-    
-    private PeriodsPersistenceImpl(List<Period> periods) {
-        this.periods = periods;
-    }
-    
-    public static final PeriodsPersistenceImpl getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new PeriodsPersistenceImpl(readPeriodsFile());
-        }
-        
-        return INSTANCE;
-    } 
     
     @Override
-    public boolean insert(Period period) {
-        this.periods.add(period);
-        
-        if (!save()) {
-            this.periods.remove(period);
-            return false;
-        }
-        
-        return true;
-    }
-
-    @Override
-    public boolean update(Period period) {
-        final Optional<Period> optionalPeriod = this.periods.stream()
-                .filter((t) -> t.getCode() == period.getCode()).findFirst();
-        
-        if (!optionalPeriod.isPresent()) {
-            return false;
-        }
-        
-        this.periods.remove(optionalPeriod.get());
-        
-        if (!insert(period)) {
-            this.periods.add(optionalPeriod.get());
-            return false;
-        }
-        
-        return true;
-    }
-
-    @Override
-    public boolean remove(Period period) {
-        final Optional<Period> optionalPeriod = this.periods.stream()
-                .filter((t) -> t.getCode() == period.getCode()).findFirst();
-        
-        if (!optionalPeriod.isPresent()) {
-            return false;
-        }
-        
-        this.periods.remove(optionalPeriod.get());
-        
-        if (!save()) {
-            this.periods.add(optionalPeriod.get());
-            return false;
-        }
-        
-        return true;
-    }
-
-    private boolean save() {
+    public boolean save(List<Period> periods) {
         try {
             File file = createFile();
-            return saveFile(file, getParser().toXML(this.periods));
+            return saveFile(file, getParser().toXML(periods));
         } catch (Exception e) {
             LOG.error("Failed to save file", e);
             return false;
@@ -126,7 +63,7 @@ public class PeriodsPersistenceImpl extends PeriodsPersistencePOA {
     @Override
     public Period load(int code) {
         try {
-            final Optional<Period> optionalPeriod = this.periods.stream()
+            final Optional<Period> optionalPeriod = loadAll().stream()
                     .filter((t) -> t.getCode() == code).findFirst();
             if (optionalPeriod.isPresent()) {
                 return optionalPeriod.get();
@@ -140,7 +77,7 @@ public class PeriodsPersistenceImpl extends PeriodsPersistencePOA {
 
     @Override
     public List<Period> loadAll() {
-        return this.periods;
+        return readPeriodsFile();
     }
     
     private static XStream getParser() {

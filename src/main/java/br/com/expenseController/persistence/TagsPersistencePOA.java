@@ -40,37 +40,17 @@ public abstract class TagsPersistencePOA extends Servant
         }
 
         switch (__method.intValue()) {
-        case 0: // br/com/expenseController/persistence/TagPersistence/insert
+        case 0: // br/com/expenseController/persistence/TagPersistence/save
         {
-            Tag tag = TagHelper.read(in);
+            List<Tag> tags = TagsHelper.read(in);
             boolean result = false;
-            result = this.insert(tag);
+            result = this.save(tags);
             out = rh.createReply();
             out.write_boolean(result);
             break;
         }
 
-        case 1: // br/com/expenseController/persistence/TagPersistence/update
-        {
-            Tag tag = TagHelper.read(in);
-            boolean result = false;
-            result = this.update(tag);
-            out = rh.createReply();
-            out.write_boolean(result);
-            break;
-        }
-
-        case 2: // br/com/expenseController/persistence/TagPersistence/remove
-        {
-            Tag tag = TagHelper.read(in);
-            boolean result = false;
-            result = this.remove(tag);
-            out = rh.createReply();
-            out.write_boolean(result);
-            break;
-        }
-
-        case 3: // br/com/expenseController/persistence/TagPersistence/load
+        case 1: // br/com/expenseController/persistence/TagPersistence/load
         {
             int code = in.read_long();
             Tag result = null;
@@ -80,7 +60,7 @@ public abstract class TagsPersistencePOA extends Servant
             break;
         }
 
-        case 4: // br/com/expenseController/persistence/TagPersistence/loadAll
+        case 2: // br/com/expenseController/persistence/TagPersistence/loadAll
         {
             List<Tag> result = null;
             result = this.loadAll();
