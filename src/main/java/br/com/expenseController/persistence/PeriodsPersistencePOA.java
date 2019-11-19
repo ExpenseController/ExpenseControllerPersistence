@@ -24,11 +24,9 @@ public abstract class PeriodsPersistencePOA extends Servant
     };
 
     static {
-        METHODS.put("insert", new java.lang.Integer(0));
-        METHODS.put("update", new java.lang.Integer(1));
-        METHODS.put("remove", new java.lang.Integer(2));
-        METHODS.put("load", new java.lang.Integer(3));
-        METHODS.put("loadAll", new java.lang.Integer(4));
+        METHODS.put("save", new java.lang.Integer(0));
+        METHODS.put("load", new java.lang.Integer(1));
+        METHODS.put("loadAll", new java.lang.Integer(2));
     }
 
     public OutputStream _invoke(String method, InputStream in, ResponseHandler rh) {

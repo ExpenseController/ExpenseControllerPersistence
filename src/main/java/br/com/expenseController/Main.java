@@ -1,11 +1,11 @@
 package br.com.expenseController;
 
-import br.com.expenseController.controller.TagController;
-import br.com.expenseController.controller.TagControllerHelper;
 import br.com.expenseController.persistence.PeriodPersistence;
 import br.com.expenseController.persistence.PeriodPersistenceHelper;
 import br.com.expenseController.persistence.PeriodsPersistenceImpl;
 import br.com.expenseController.persistence.PeriodsPersistencePOA;
+import br.com.expenseController.persistence.TagPersistence;
+import br.com.expenseController.persistence.TagPersistenceHelper;
 import br.com.expenseController.persistence.TagsPersistenceImpl;
 import br.com.expenseController.persistence.TagsPersistencePOA;
 import org.omg.CORBA.ORB;
@@ -61,7 +61,7 @@ public class Main {
             TagsPersistencePOA impl = new TagsPersistenceImpl();
             // Pega a referência do servidor
             org.omg.CORBA.Object ref = rootpoa.servant_to_reference(impl);
-            TagController href = TagControllerHelper.narrow(ref);
+            TagPersistence href = TagPersistenceHelper.narrow(ref);
             // Registra o servidor no servico de nomes
             NameComponent path[] = ncRef.to_name("TagsPersistence");
             ncRef.rebind(path, href);

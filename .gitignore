@@ -1,2 +1,5 @@
 /target/
 /nbproject/
+/database/*
+nbactions.xml
+orb.db/
